@@ -1,0 +1,21 @@
+{% extends "components/default.html" %}
+
+{% block page_body %}
+  <h1 class="titre">Messagerie</h1>
+  <p class="desc">Vous êtes connecté en tant que {{ user.pseudo }}. Il y a {{ nb_msg }} messages dans la base de données.</p>
+  <div class="zoneMessage">  
+  <div id="messenger"></div>
+  <div class="writing" id="typingMsg">{{ user.pseudo }} écrit un message...</div>
+  </div>
+  <div id="bdd"></div>
+  <div class="messageFieldGroup">
+      <input id="message" type="text" name="message" value=""/>
+      <a class="button" href="#" id="valider">Envoyer</a>
+    
+    <div id="emojis">
+      {% for e in emojis %}
+      <a class='emoji' href="#" onclick="addEmoji('{{ e }}')">{{ e }}</a>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}
