@@ -1,6 +1,7 @@
-![image](https://i.imgur.com/6zZqxVh.png)
-# Foxenger
-Local chat prototype made with Python Flask
+<p align="center"><img src="https://i.imgur.com/6zZqxVh.png"></p>
+
+<h1 align="center">Foxenger</h1>
+<h4 align="center">Local chat prototype made with Python Flask.</h4>
 
 ## What's this?
 Foxenger is a (work in progress) small school project, made with Flask and using some Javascript and Ajax.
