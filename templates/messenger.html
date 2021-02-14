@@ -1,21 +1,54 @@
 {% extends "components/default.html" %}
 
 {% block page_body %}
-  <h1 class="titre">Messagerie</h1>
-  <p class="desc">Vous êtes connecté en tant que {{ user.pseudo }}. Il y a {{ nb_msg }} messages dans la base de données.</p>
-  <div class="zoneMessage">  
-  <div id="messenger"></div>
-  <div class="writing" id="typingMsg">{{ user.pseudo }} écrit un message...</div>
-  </div>
-  <div id="bdd"></div>
-  <div class="messageFieldGroup">
-      <input id="message" type="text" name="message" value=""/>
-      <a class="button" href="#" id="valider">Envoyer</a>
-    
-    <div id="emojis">
-      {% for e in emojis %}
-      <a class='emoji' href="#" onclick="addEmoji('{{ e }}')">{{ e }}</a>
-      {% endfor %}
+  {% if session %}
+    <h1 class="titre">Messagerie</h1>
+    <p class="desc">Vous êtes connecté en tant que {{ user.pseudo }}. Il y a {{ nb_msg }} messages dans la base de données.</p>
+    <p class="desc" id='online_users'><small>Vérification des utilisateurs en ligne...</small></p>
+    <div class="zoneMessage">  
+    <div id="messenger"></div>
+    <div class="writing" id="typingMsg">{{ user.pseudo }} écrit un message...</div>
     </div>
-  </div>
+    <div id="bdd"></div>
+    <div class="messageFieldGroup">
+        <input id="message" type="text" name="message" value=""/>
+        <a class="button" href="#" id="valider">Envoyer</a>
+      
+      <div id="emojis">
+        {% for e in emojis %}
+        <a class='emoji' href="#" onclick="addEmoji('{{ e }}')">{{ e }}</a>
+        {% endfor %}
+      </div>
+    </div>
+  {% else %}
+    <h1 class="titre">Messagerie</h1>
+    <p class="desc">Veuillez vous connecter afin de pouvoir commencer à discuter.</p>
+    <div class="auth_buttons">
+      <a class="login_button" href="#" id="signin">S'inscrire</a>
+      <div id="signin_modal" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <h2 class="modal_title">Inscription</h2>
+          <p>Remplissez le formulaire ci-dessous afin de vous inscrire sur la plateforme.</p>
+          <input class="auth_input" id="signin_username" type="text" name="message" value="Nom d'utilisateur"/>
+          <input class="auth_input" id="signin_pw" type="password" name="message" value="Password"/>
+          <br>
+          <button class="login_button" href="#" id="signin_validate">Envoyer</button>
+        </div>
+      </div> 
+
+      <a class="login_button" href="#" id="login">Se connecter</a>
+      <div id="login_modal" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <h2 class="modal_title">Connexion</h2>
+          <p>Remplissez le formulaire ci-dessous afin de vous connecter sur la plateforme.</p>
+          <input class="auth_input" id="login_username" type="text" name="message" value="Nom d'utilisateur"/>
+          <input class="auth_input" type="login_pw" name="message" value="Password"/>
+          <br>
+          <button class="login_button" href="#" id="login_validate">Envoyer</button>
+        </div>
+      </div>
+    </div>
+  {% endif %}
 {% endblock %}
