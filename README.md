@@ -17,7 +17,14 @@ Here is basically how the application work:
 * **Javascript.** Elements are being updated with some Javascript to avoid any page refresh.
 
 ## Is this going to be a serious project?
-For now, no. However, this school project is still ongoing and it's really fun to work on it! I will try to push some updates whenever I have time.
+For now, no. However, this school project is still ongoing and it's really fun to work on it! I will try to push some updates whenever I have time. Here is a list of a few things that I would like to do:
+
+- [ ] Use a real database (possibly MongoDB) instead of json files
+- [ ] Move helper functions from core and import them as module
+- [ ] Remove duplicate Flask routes and improve their names
+- [ ] Improve the UI design by using Tailwind CSS
+- [ ] Replace remaining HTTP requests with Ajax
+- [ ] Possibly use websockets instead of checking with setInterval()
 
 ## Can I see how it looks like?
-Not yet! But I'm working on bringing a live version. Once it will be publicly accessible, the link will be available here.
+Not yet! The project itself has multiple vulnerabilities and publishing a live version may create some issues. Once it will be publicly accessible, the link will be added here.
