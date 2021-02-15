@@ -19,8 +19,8 @@ With this small project (as a Python dev), I would like to start learning some j
 ## What are you using to make this work?
 Here is basically how the application work:
 * **No (real) database.** Everything is storred for now in a json file, which is enough for this project.
-* **Ajax.** Messages are fetched every few seconds with an Ajax request to the web server.
-* **Javascript.** Elements are being updated with some Javascript to avoid any page refresh.
+* **Ajax requests.** Messages are fetched every few seconds with an Ajax request to the Flask web server.
+* **Single page project.** Elements in page are being updated with Javascript. Everything happens in the same page.
 
 ## Is this going to be a serious project?
 For now, no. However, this school project is still ongoing and it's really fun to work on it! I will try to push some updates whenever I have time. Here is a list of a few things that I would like to do:
@@ -33,4 +33,4 @@ For now, no. However, this school project is still ongoing and it's really fun t
 - [ ] Possibly use websockets instead of checking with setInterval()
 
 ## Can I see how it looks like?
-Not yet! The project itself has multiple vulnerabilities and publishing a live version may create some issues. Once it will be publicly accessible, the link will be added here.
+Not yet! The project itself has multiple security vulnerabilities and publishing a live version may create some issues. Once the app is ready for being launched in production mode, it will be publicly accessible and more information will be added here.
