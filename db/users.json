@@ -1,5 +1,1 @@
-{
-    "users" : [
-        {"id" : 0, "pseudo" : "paul", "passe" : "estiam123"}
-    ]          
-}
+{"users": [{"id": 0, "pseudo": "paul", "passe": "estiam123", "last_action": "2021-02-14 22:38:13.379348"}, {"id": 1, "pseudo": "bob", "passe": "bob123", "last_action": "2021-02-15 00:43:23.694569"}, {"id": 2, "pseudo": "Toto", "passe": "toto789"}, {"id": 3, "pseudo": "bafle", "passe": "bafle123", "last_action": "2021-02-15 00:42:32.939574"}, {"id": 4, "pseudo": "Tom", "passe": "Tom123", "last_action": "2021-02-15 01:10:57.586876"}, {"id": 5, "pseudo": "Jerry", "passe": "jerry123", "last_action": "2021-02-15 01:11:56.639408"}, {"id": 6, "pseudo": "Billy", "passe": "billy123", "last_action": "2021-02-15 01:14:16.060657"}]}

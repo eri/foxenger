@@ -16,6 +16,7 @@ var login_form_button = document.getElementById("login_validate"); //Bouton form
 
 var close_modal = document.getElementsByClassName("close"); // Bouton fermeture modal
 
+
 /// Évènements
 if (msgbox || envoyer) {
     msgbox.addEventListener("keypress", writingMsg); // En train d'écrire...
@@ -31,8 +32,8 @@ if (msgbox || envoyer) {
 
 if (signin || login) {
     // Évènements
-    signin_form_button.addEventListener("click", signin_user());
-    // login_form_button.addEventListener("click", login_user());
+    signin_form_button.addEventListener("click", function() {signin_user()});
+    login_form_button.addEventListener("click", function() {login_user()});
 
     // Lorsqu'on clique sur le bouton
     signin.onclick = function() { signin_modal.style.display = "block"; };
@@ -80,12 +81,29 @@ function signin_user() {
     $.ajax({ // Enregistre l'utilisateur dans la BDD
         type: "GET",
         headers: {"Access-Control-Allow-Origin": "*"},
-        url: "http://localhost:5000/api/user/new/"+encodeURI(pseudo)+"/"+encodeURI(pw)
+        url: "http://localhost:5000/api/auth/signin/"+encodeURI(pseudo)+"/"+encodeURI(pw)
     }).done(function (data) {
         if (data == "True") {
-            signin_modal.style.backgroundColor = "none";
+            document.getElementById("signin_modal_content").style.backgroundColor = "green";
         } else {
+            document.getElementById("signin_modal_content").style.backgroundColor = "red";
+        }
+    });
+}
 
+function login_user() {
+    var pseudo = document.getElementById("login_username").value;
+    var pw = document.getElementById("login_pw").value;
+
+    $.ajax({ // Connecte et affiche la page via l'ajax
+        type: "GET",
+        headers: {"Access-Control-Allow-Origin": "*"},
+        url: "http://localhost:5000/api/auth/login/"+encodeURI(pseudo)+"/"+encodeURI(pw)
+    }).done(function (data) {
+        if (data == "False") {
+            document.getElementById("login_modal_content").style.backgroundColor = "red";
+        } else {
+            $("body").html(data);
         }
     });
 }
@@ -95,6 +113,16 @@ function save_bdd() { // Enregistre à la base de données
     var url = "http://localhost:5000/api/message/new/" + encodeURI(msgbox.value)
     ajax.open("POST", url, true);
     ajax.send();
+
+    $.ajax({ 
+        type: "GET",
+        headers: {"Access-Control-Allow-Origin": "*"},
+        url: "http://localhost:5000/api/stats/messages"
+    }).done(function (data) {
+        if (data != "False") {
+            document.getElementById("total_msg").innerHTML = data;
+        }
+    });
 }
 
 function writingMsg() { // Afficher le en train d'écrire

@@ -1,4 +1,4 @@
-﻿from flask import Flask, jsonify, request, redirect, render_template, session, send_from_directory
+﻿from flask import Flask, jsonify, request, redirect, render_template, session, send_from_directory, url_for
 from urllib.parse import unquote
 import datetime
 import json
@@ -55,14 +55,14 @@ def get_connected_users():
 
 ## Routes HTML 
 @app.route("/")
-def page_messagerie():
+def accueuil():
     """Page d'accueil du site"""
     logged = False
-    if 'user_id' in session: logged = True
+    if 'user_id' in session and session['user_id'] is not None: logged = True
 
     return render_template("messenger.html", **{
-            'session': False,
-            'user':get_users()['users'][-1], 'emojis':get_emojis(),
+            'session': logged,
+            'user':get_users()['users'][int(session['user_id'])] if logged else None, 'emojis':get_emojis(),
             'nb_msg': len(get_messages()['messages']) })
 
 @app.route("/favicon.ico")
@@ -72,23 +72,50 @@ def favicon():
     'favicon.ico', mimetype='image/vnd.microsoft.icon')           
 
 ## Requêtes API
-@app.route("/api/user/new/<user>/<pw>")
-def add_user(user, pw):
+@app.route("/api/auth/signin/<user>/<pw>")
+def signin_user(user, pw):
     """Permet d'ajouter un utilisateur"""
     try:
-        data = get_users()['users']
-        data.append({"id": data[-1]['id']+1, "nom": str(user), "passe":str(pw)}) 
+        data = get_users()
+        last_id = data['users'][-1]['id']+1
+        data['users'].append({"id": last_id, "pseudo": str(user), "passe":str(pw)}) 
         with open('db/users.json', 'w') as f: json.dump(data, f)
         return "True"
     except Exception:
         return "False"
-    
+
+## Requêtes API
+@app.route("/api/auth/login/<user>/<pw>")
+def login_user(user, pw):
+    """Permet de vérifier si un utilisateur peut se connecter"""
+    try:
+        data = get_users()
+        for u in data['users']:
+            if u['pseudo'] == str(user) and u['passe']:
+                session['user_id'] = u['id']
+                # On demande au server web de générer la page de messenger habituel
+                return render_template("messenger.html", **{
+                    'session': True, 'user':u, 'emojis':get_emojis(),
+                    'nb_msg': len(get_messages()['messages']) })
+        return "False"
+    except Exception:
+        return "False"
+
+@app.route("/api/auth/logout")
+def logout():
+    """Permet de déconnecter un utilisateur"""
+    try:
+        if "user_id" in session:
+            session['user_id'] = None
+        return redirect(url_for('accueuil'))
+    except Exception:
+        return "False"
 
 @app.route("/api/message/new/<message>", methods=['GET', 'POST'])
 def add_messages(message):
     """Permet de retourner tous les messages depuis la BDD"""
     data = get_messages()
-    user = get_users()['users'][-1]
+    user = get_users()['users'][session['user_id']]
     data['messages'].append({"id": int(data['messages'][-1]['id'])+1,
     "id_membre":user['id'], "contenu":unquote(message), "date" : str(datetime.datetime.now())})
     with open('db/messages.json', 'w') as f: json.dump(data, f)
@@ -101,14 +128,12 @@ def list_messages():
         data = get_messages()['messages']
         html = ""
         for msg in data:
+
             date = msg['date'].split(' ')[0]
             heure = str(msg['date'].split(' ')[1].split('.')[0])[:5]
             timestamp = date if not str(datetime.datetime.now()).split(' ')[0] == date else heure
-            user = get_users()['users'][-1]
-            html += f"<div class='authorbox'>{user['pseudo']}: <div class='msgbox'>{msg['contenu']}</div><small>{timestamp}</small></div>"
-        if not 'lastMsg' in session or not session['lastMsg'] == get_messages()['messages'][-1]['id']:
-            # Session invalide ou nouveau message
-            session['lastMsg'] = get_messages()['messages'][-1]['id']
+            user = get_users()['users'][msg['id_membre']]
+            html += f"<div class='authorbox'>{user['pseudo'].capitalize()}: <div class='msgbox'>{msg['contenu']}</div><small>{timestamp}</small></div>"
         return html
     except json.decoder.JSONDecodeError:
         print("Les messages n'ont pas pu être vérifiés.") 
@@ -116,7 +141,7 @@ def list_messages():
 
 @app.route("/api/user/status", methods=['POST'])
 def mark_user_as_online():
-    update_user("last_action", str(datetime.datetime.now()), name_user="paul")
+    update_user("last_action", str(datetime.datetime.now()), id_user=session['user_id'])
     return "False"
 
 @app.route("/api/users/online", methods=['GET'])
@@ -128,6 +153,14 @@ def list_connected_users():
         return f"Il y a {len(users)} utilisateurs actuellement en ligne : {', '.join([x['pseudo'] for x in users])}"
     except json.decoder.JSONDecodeError:
         print("Les utilisateurs en ligne n'ont pas pu être vérifiés.")
+        return "False"
+
+@app.route("/api/stats/messages")
+def message_stats():
+    try:
+        return f"{len(get_messages()['messages'])} messages"
+    except Exception:
+        print("La quantité totale de messages n'a pas pu être relevé.")
         return "False"
 
 if __name__ == '__main__':
