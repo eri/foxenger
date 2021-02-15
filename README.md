@@ -2,13 +2,19 @@
 
 <h1 align="center">Foxenger</h1>
 <h4 align="center">Local chat prototype made with Python Flask.</h4>
+<p align="center">
+  <img alt="Python" src="https://img.shields.io/badge/python%20-%2314354C.svg?&style=for-the-badge&logo=python&logoColor=white"/>
+  <img alt="Flask" src="https://img.shields.io/badge/flask%20-%23000.svg?&style=for-the-badge&logo=flask&logoColor=white"/>
+  <img alt="JavaScript" src="https://img.shields.io/badge/javascript%20-%23323330.svg?&style=for-the-badge&logo=javascript&logoColor=%23F7DF1E"/>
+  <img alt="jQuery" src="https://img.shields.io/badge/jquery%20-%230769AD.svg?&style=for-the-badge&logo=jquery&logoColor=white"/>
+</p>
 
 ## What's this?
 Foxenger is a (work in progress) small school project, made with Flask and using some Javascript and Ajax.
 The main feature of this project is to create a small chatting application where an user can log in and start chatting under some username.
 
 The project isn't meant to be secure (no password & data encryption, etc) or efficient in terms of performance as it's not the first goal of the project.
-With this small project (as a Python dev), I'm starting to learn some javascript in order to improve my skills.
+With this small project (as a Python dev), I would like to start learning some javascript and improve my skills.
 
 ## What are you using to make this work?
 Here is basically how the application work:
