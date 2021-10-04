@@ -22,7 +22,7 @@ Here is basically how the application work:
 * **Ajax requests.** Messages are fetched every few seconds with an Ajax request to the Flask web server.
 * **Single page project.** Elements in page are being updated with Javascript. Everything happens in the same page.
 
-## Is this going to be a serious project?
+## Is this going to be a real project?
 For now, no. However, this school project is still ongoing and it's really fun to work on it! I will try to push some updates whenever I have time. Here is a list of a few things that I would like to do:
 
 - [ ] Use a real database (possibly MongoDB) instead of json files
