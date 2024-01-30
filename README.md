@@ -9,6 +9,9 @@
   <img alt="jQuery" src="https://img.shields.io/badge/jquery%20-%230769AD.svg?&style=for-the-badge&logo=jquery&logoColor=white"/>
 </p>
 
+> [!IMPORTANT]  
+> **This project is archived and now read-only.** Be aware that if you attempt to run this project, it probably won't work.
+
 ## What's this?
 Foxenger is a (work in progress) small school project, made with Flask and using some Javascript and Ajax.
 The main feature of this project is to create a small chatting application where an user can log in and start chatting under some username.
